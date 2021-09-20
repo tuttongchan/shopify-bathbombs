@@ -42,13 +42,25 @@ class shopProvider extends Component {
   removeLineItem = async (lineItemIdsToRemove) => {};
 
   fetchAllProducts = async () => {
-    const products = await client.product.fetchAll();
-    this.setState({ products: products });
+    client.product.fetchAll().then((products) => {
+      this.setState({ products: products });
+      console.log(products);
+    });
+
+    // --- Old method --- 
+    // const products = await client.product.fetchAll();
+    // this.setState({ products: products });
   };
 
   fetchProductWithHandle = async (handle) => {
-    const product = client.product.fetchByHandle(handle);
-    this.setState({ product: product });
+    client.product.fetchByHandle(handle).then((product) => {
+      this.setState({ product: product });
+      console.log(product);
+    });
+
+    // --- Old method --- 
+    // const product = client.product.fetchByHandle(handle);
+    // this.setState({ product: product });
   };
 
   closeCart = () => {};
@@ -61,7 +73,6 @@ class shopProvider extends Component {
 
   render() {
     console.log(this.state.checkout);
-
     return (
       <div>
         <ShopContext.Provider
@@ -72,7 +83,6 @@ class shopProvider extends Component {
             addItemToCheckout: this.addItemtoCheckout,
             closeCart: this.closeCart,
             openCart: this.openCart,
-            closeMenu: this.closeMenu,
             closeMenu: this.closeMenu,
             openMenu: this.openMenu,
           }}
